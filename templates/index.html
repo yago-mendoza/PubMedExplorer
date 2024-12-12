@@ -10,7 +10,7 @@
     <div class="container">
         <header>
             <h1>Enter a disease name...</h1>
-            <p class="subtitle">Write the name of the disease and press search</p>
+            <p class="subtitle">your line ave fulliter</p>
         </header>
         <form id="search-form" class="search-form">
             <input type="text" name="disease" placeholder="Ingresa el nombre de la enfermedad" required>
@@ -20,6 +20,12 @@
         </form>
         <div id="results" class="results"></div>
     </div>
+    
+    <!-- Loading Animation Container -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
