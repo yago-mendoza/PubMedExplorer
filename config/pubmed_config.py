@@ -8,7 +8,8 @@ PUBMED_CONFIG = {
         "retmode": "json"
     },
     "search_params": {
-        "sort": "pub+date" # Use "-pub+date" for older articles first
+        "sort": "pub+date", # Use "-pub+date" for older articles first
+        "max_results": 12
     },
     "rate_limit": {
         "min_interval": 1,

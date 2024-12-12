@@ -2,27 +2,32 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const disease = e.target.disease.value;
     
-    // Show loading overlay
-    showLoading();
-
+    // Mostrar animación de carga
+    document.getElementById('loading-overlay').style.display = 'flex';
+    
     try {
-        const response = await fetch(`/search?disease=${encodeURIComponent(disease)}`);
+        const response = await fetch(`/search?disease=${encodeURIComponent(disease)}&max_results=${resultsCount}`);
         const data = await response.json();
         
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = '';
-
-        if (data.error) {
-            resultsDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
-            return;
+        if (!response.ok) {
+            throw new Error(data.error || 'Error en la búsqueda');
         }
-
+        
+        // Limpiar resultados anteriores
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = '';
+        
         if (data.length === 0) {
-            resultsDiv.innerHTML = '<p>No se encontraron publicaciones.</p>';
+            // Mostrar mensaje cuando no hay resultados
+            const noResults = document.createElement('div');
+            noResults.classList.add('no-results');
+            noResults.textContent = 'No se encontraron resultados para esta búsqueda';
+            resultsContainer.appendChild(noResults);
             return;
         }
-
-        data.forEach((article, index) => {
+        
+        // Asegurarse de que solo se muestren tantos resultados como se especificó
+        data.slice(0, resultsCount).forEach((article, index) => {
             const panel = document.createElement('div');
             panel.classList.add('result-panel');
             
@@ -96,14 +101,15 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
             panel.appendChild(metadata);
             panel.appendChild(link);
 
-            resultsDiv.appendChild(panel);
+            resultsContainer.appendChild(panel);
         });
+        
     } catch (error) {
-        console.error('Error fetching data:', error);
-        document.getElementById('results').innerHTML = `<p style="color: red;">An error occurred while fetching data.</p>`;
+        console.error('Error:', error);
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
     } finally {
-        // Hide loading overlay
-        hideLoading();
+        document.getElementById('loading-overlay').style.display = 'none';
     }
 });
 
@@ -190,5 +196,29 @@ async function initSuggestionsCarousel() {
     animate();
 }
 
+
 // Inicializar el carrusel cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', initSuggestionsCarousel);
+
+// Results counter functionality
+let resultsCount = 5;
+const minResults = 1;
+const maxResults = 20;
+
+document.getElementById('increase-results').addEventListener('click', () => {
+    if (resultsCount < maxResults) {
+        resultsCount++;
+        updateResultsCount();
+    }
+});
+
+document.getElementById('decrease-results').addEventListener('click', () => {
+    if (resultsCount > minResults) {
+        resultsCount--;
+        updateResultsCount();
+    }
+});
+
+function updateResultsCount() {
+    document.getElementById('results-count').textContent = resultsCount;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<div class="top-strip"></div>
 <head>
     <meta charset="UTF-8">
     <title>PubMed Search</title>
@@ -13,10 +14,20 @@
             <p class="subtitle">Search for &lt;research papers&gt; on PubMed using disease keywords</p>
         </header>
         <div class="search-section">
+            <div class="results-counter">
+                <div class="counter-icon" id="decrease-results">
+                    <img src="{{ url_for('static', filename='svgs/minus-solid.svg') }}" alt="Decrease">
+                </div>
+                <span id="results-count">5</span>
+                <div class="counter-icon" id="increase-results">
+                    <img src="{{ url_for('static', filename='svgs/plus-solid.svg') }}" alt="Increase">
+                </div>
+            </div>
             <form id="search-form" class="search-form">
                 <div class="search-icon">
                     <img src="{{ url_for('static', filename='svgs/magnifying-glass-solid.svg') }}" alt="Search">
                 </div>
+
                 <input type="text" name="disease" autocomplete="off" placeholder="Ingresa el nombre de la enfermedad" required>
                 <button type="submit">
                     <span class="search-icon">🔍</span> Search Research

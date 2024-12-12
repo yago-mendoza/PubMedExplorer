@@ -7,6 +7,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .container {
@@ -15,9 +17,33 @@ body {
     text-align: center;
 }
 
+.top-strip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #009dff;
+    z-index: 1000;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.main-content h1 {
+    margin-top: 100px;
+}
+
 header h1 {
     font-size: 2em;
     color: #333333;
+    margin-top: 100px;
     margin-bottom: 10px;
 }
 
@@ -32,17 +58,17 @@ header h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 55px;
     width: 100%;
 }
 
 .search-form input {
-    padding: 30px 40px 30px 10%;
+    padding: 30px 20% 30px 10%;
     font-size: 1.1em;
-    width: 60%;
+    width: 50%;
     border: 2px solid #ccc;
     border-radius: 9999px;
-    background: linear-gradient(to bottom right, #3087bc 30%, #98d2f0);
+    background: linear-gradient(to bottom right, #009dff 30%, #aee3ff);
     color: #ffffff;
     outline: none;
     line-height: 1.5;
@@ -52,13 +78,13 @@ header h1 {
 
 .search-form input::placeholder {
     text-align: left;
-    padding-left: 0;
+    padding-left: 10;
     color: #ffffff;
 }
 
 .search-form .search-icon {
     position: absolute;
-    left: 17%;
+    left: 15%;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -84,6 +110,43 @@ header h1 {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.results-counter {
+    position: absolute;
+    right: 22%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+    right: 14%;
+    top: 27%;
+}
+
+.counter-icon {
+    width: 20px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.counter-icon img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) invert(1);  /* Hace el icono blanco como el magnifying glass */
+}
+
+.counter-icon:hover {
+    opacity: 0.8;
+}
+
+#results-count {
+    font-size: 1.1em;
+    color: white;
+    min-width: 20px;
+    text-align: center;
 }
 
 .results .result-panel {
@@ -323,3 +386,4 @@ header h1 {
         transform: translateY(0);
     }
 }
+

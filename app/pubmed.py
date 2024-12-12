@@ -29,11 +29,10 @@ class RateLimiter:
 pubmed_client = RateLimiter()
 
 @lru_cache(maxsize=PUBMED_CONFIG["rate_limit"]["cache_size"])
-def fetch_pubmed_articles(disease_name, max_results=5):
+def fetch_pubmed_articles(disease_name, max_results=PUBMED_CONFIG["search_params"]["max_results"]):
     """
     Fetches the latest PubMed articles for a given disease.
     """
-    # Uses a PubMed endpoint to retrieve article IDs matching the search criteria
     base_url = PUBMED_CONFIG["base_urls"]["search"]
     params = {
         **PUBMED_CONFIG["default_params"],
