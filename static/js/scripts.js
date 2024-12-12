@@ -30,16 +30,57 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
             date.classList.add('article-date');
             date.textContent = article.date || 'Date not available';
 
+            // Create the page count circle
+            const pageCircle = document.createElement('div');
+            pageCircle.classList.add('page-circle');
+
+            // Create the document icon
+            const docIcon = document.createElement('img');
+            docIcon.src = "{{ url_for('static', filename='svgs/file-solid.svg') }}"; // Ensure this path is correct
+            docIcon.alt = 'Document Icon';
+            docIcon.classList.add('doc-icon');
+
+            // Create the page number element
+            const pageNumber = document.createElement('span');
+            pageNumber.classList.add('page-number');
+
+            
+            function getPageText(pages) {
+                // Function to adapt the page number from the pages string
+                let pageText = 'N/A';
+                if (typeof pages === 'string') {
+                    const pageParts = pages.split('-').map(part => part.trim());
+            
+                    if (pageParts.length === 2 && pageParts.every(part => !isNaN(parseInt(part)))) {
+                        pageText = pageParts[1]; // Take the second number
+                    } else if (!isNaN(parseInt(pages))) {
+                        pageText = pages; // Take the number directly
+                    }
+                }
+                return pageText;
+            } 
+
+            pageNumber.textContent = getPageText(article.pages);
+            
+            // Append icon and page number to the circle
+            pageCircle.appendChild(docIcon);
+            pageCircle.appendChild(pageNumber);
+
             const title = document.createElement('h2');
+
+            // Create a container for the circle and title
+            const titleContainer = document.createElement('div');
+            titleContainer.classList.add('title-container');
+
             title.textContent = article.title;
+
+            // Append circle and title to the container
+            titleContainer.appendChild(pageCircle);
+            titleContainer.appendChild(title);
 
             const metadata = document.createElement('p');
             metadata.classList.add('article-metadata');
-            metadata.textContent = `Pages: ${article.pages || 'N/A'} | Journal: ${article.journal || 'N/A'} | Authors: ${article.authors || 'N/A'}`;
-
-            const summary = document.createElement('p');
-            summary.classList.add('article-abstract');
-            summary.textContent = article.summary || 'No abstract available.';
+            metadata.textContent = `Journal: ${article.journal || 'N/A'} || Authors: ${article.authors || 'N/A'}`;
 
             const link = document.createElement('a');
             link.href = article.link;
@@ -47,9 +88,8 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
             link.textContent = 'Read More';
 
             panel.appendChild(date);
-            panel.appendChild(title);
+            panel.appendChild(titleContainer);
             panel.appendChild(metadata);
-            panel.appendChild(summary);
             panel.appendChild(link);
 
             resultsDiv.appendChild(panel);
