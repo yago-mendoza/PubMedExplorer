@@ -77,9 +77,21 @@ def fetch_multiple_article_details(article_ids):
         for article_id in article_ids:
             summary = results.get(article_id, {})
             if summary:
+                # Procesar los autores
+                authors = summary.get("authors", [])
+                author_names = [author.get("name", "") for author in authors]
+                
                 articles.append({
                     "title": summary.get("title", "No title available"),
+                    "authors": ", ".join(author_names) if author_names else "No authors available",
                     "date": summary.get("pubdate", "No date available"),
+                    "journal": summary.get("source", "No journal available"),
+                    "volume": summary.get("volume", "N/A"),
+                    "issue": summary.get("issue", "N/A"),
+                    "pages": summary.get("pages", "N/A"),
+                    "doi": summary.get("elocationid", "No DOI available"),
+                    "abstract": summary.get("abstract", "No abstract available"),
+                    "keywords": summary.get("keywords", []),
                     "link": f"https://pubmed.ncbi.nlm.nih.gov/{article_id}/"
                 })
         
