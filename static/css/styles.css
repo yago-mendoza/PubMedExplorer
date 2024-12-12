@@ -206,7 +206,6 @@ header h1 {
 }
 
 .article-date {
-<<<<<<< HEAD
     font-size: 1.1em;  /* Aumentado de tamaño */
     font-weight: 500;  /* Opcional: hace la fecha un poco más bold */
     color: #333;       /* Opcional: asegura buen contraste */
@@ -323,7 +322,3 @@ header h1 {
         opacity: 1;
         transform: translateY(0);
     }
-=======
-    margin-bottom: 1rem;
->>>>>>> 8d8bd414333e926c76b5c8ddcd3a7856511c6841
-}
