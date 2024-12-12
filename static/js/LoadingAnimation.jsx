@@ -1,3 +1,5 @@
+// Note: This animation component is currently unused in the project. It remains included for potential future integration of advanced React elements.
+
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -134,4 +136,4 @@ const LoadingAnimation = () => {
 // Render the LoadingAnimation component into the loading-animation div
 ReactDOM.render(<LoadingAnimation />, document.getElementById('loading-animation'));
 
-export default LoadingAnimation;    
+export default LoadingAnimation;

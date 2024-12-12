@@ -62,3 +62,8 @@ function hideLoading() {
     const overlay = document.getElementById('loading-overlay');
     overlay.style.display = 'none';
 }
+
+// Optional: Allow clicking the search icon to submit the form
+document.querySelector('.search-icon').addEventListener('click', () => {
+    document.getElementById('search-form').dispatchEvent(new Event('submit'));
+});
