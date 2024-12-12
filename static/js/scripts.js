@@ -39,7 +39,11 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
 
             // Create the document icon
             const docIcon = document.createElement('img');
+<<<<<<< HEAD
             docIcon.src = "/static/svgs/file-solid.svg";
+=======
+            docIcon.src = "{{ url_for('static', filename='svgs/file-solid.svg') }}"; // Ensure this path is correct
+>>>>>>> 8d8bd414333e926c76b5c8ddcd3a7856511c6841
             docIcon.alt = 'Document Icon';
             docIcon.classList.add('doc-icon');
 
@@ -83,7 +87,11 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
 
             const metadata = document.createElement('p');
             metadata.classList.add('article-metadata');
+<<<<<<< HEAD
             metadata.textContent = `Journal: ${article.journal || 'N/A'} // Authors: ${article.authors || 'N/A'}`;
+=======
+            metadata.textContent = `Journal: ${article.journal || 'N/A'} || Authors: ${article.authors || 'N/A'}`;
+>>>>>>> 8d8bd414333e926c76b5c8ddcd3a7856511c6841
 
             const link = document.createElement('a');
             link.href = article.link;
