@@ -1,15 +1,35 @@
+from functools import lru_cache
 import requests
+import time
+from threading import Lock
 
+class RateLimiter:
+    def __init__(self, min_interval=1):
+        self.session = requests.Session()
+        self.last_request_time = 0
+        self.lock = Lock()
+        self.min_interval = min_interval
+
+    def get(self, *args, **kwargs):
+        with self.lock:
+            current_time = time.time()
+            time_since_last_request = current_time - self.last_request_time
+            
+            if time_since_last_request < self.min_interval:
+                time.sleep(self.min_interval - time_since_last_request)
+            
+            response = self.session.get(*args, **kwargs)
+            self.last_request_time = time.time()
+            
+            return response
+
+# Crear una instancia global del rate limiter
+pubmed_client = RateLimiter(min_interval=1)
+
+@lru_cache(maxsize=100)
 def fetch_pubmed_articles(disease_name, max_results=5):
     """
     Fetches the latest PubMed articles for a given disease.
-
-    Args:
-        disease_name (str): The name of the disease to search for.
-        max_results (int): Maximum number of articles to fetch. Default is 5.
-
-    Returns:
-        list: A list of dictionaries containing article details (title, date, link).
     """
     base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
     params = {
@@ -21,53 +41,56 @@ def fetch_pubmed_articles(disease_name, max_results=5):
     }
 
     try:
-        response = requests.get(base_url, params=params)
+        response = pubmed_client.get(base_url, params=params)
         response.raise_for_status()
         data = response.json()
-
-        # Parse results
+        
         article_ids = data.get("esearchresult", {}).get("idlist", [])
-        articles = []
-
-        for article_id in article_ids:
-            details = fetch_article_details(article_id)
-            if details:
-                articles.append(details)
-
-        return articles
+        if not article_ids:
+            return []
+            
+        return fetch_multiple_article_details(article_ids)
 
     except requests.RequestException as e:
         print(f"Error fetching articles: {e}")
         return []
 
-def fetch_article_details(article_id):
+def fetch_multiple_article_details(article_ids):
     """
-    Fetches detailed information for a specific PubMed article.
-
-    Args:
-        article_id (str): The PubMed article ID.
-
-    Returns:
-        dict: A dictionary containing article details (title, date, link).
+    Fetches details for multiple articles in a single request.
     """
     base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
     params = {
         "db": "pubmed",
-        "id": article_id,
+        "id": ",".join(article_ids),
         "retmode": "json"
     }
 
     try:
-        response = requests.get(base_url, params=params)
+        response = pubmed_client.get(base_url, params=params)
         response.raise_for_status()
         data = response.json()
+        
+        articles = []
+        results = data.get("result", {})
+        
+        for article_id in article_ids:
+            summary = results.get(article_id, {})
+            if summary:
+                articles.append({
+                    "title": summary.get("title", "No title available"),
+                    "date": summary.get("pubdate", "No date available"),
+                    "link": f"https://pubmed.ncbi.nlm.nih.gov/{article_id}/"
+                })
+        
+        return articles
 
-        summary = data.get("result", {}).get(article_id, {})
-        return {
-            "title": summary.get("title", "No title available"),
-            "date": summary.get("pubdate", "No date available"),
-            "link": f"https://pubmed.ncbi.nlm.nih.gov/{article_id}/"
-        }
     except requests.RequestException as e:
         print(f"Error fetching article details: {e}")
-        return None
+        return []
+
+def clear_cache():
+    """
+    Clears the article cache.
+    """
+    fetch_pubmed_articles.cache_clear()

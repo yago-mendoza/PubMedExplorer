@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10"
 flask = "^3.1.0"
 requests = "^2.32.3"
+ratelimit = "^2.2.1"
 
 
 [build-system]
