@@ -12,15 +12,24 @@
             <h1>PubMed Explorer</h1>
             <p class="subtitle">Search for &lt;research papers&gt; on PubMed using disease keywords</p>
         </header>
-        <form id="search-form" class="search-form">
-            <div class="search-icon">
-                <img src="{{ url_for('static', filename='svgs/magnifying-glass-solid.svg') }}" alt="Search">
+        <div class="search-section">
+            <form id="search-form" class="search-form">
+                <div class="search-icon">
+                    <img src="{{ url_for('static', filename='svgs/magnifying-glass-solid.svg') }}" alt="Search">
+                </div>
+                <input type="text" name="disease" autocomplete="off" placeholder="Ingresa el nombre de la enfermedad" required>
+                <button type="submit">
+                    <span class="search-icon">🔍</span> Search Research
+                </button>
+            </form>
+            <div class="suggestions-carousel">
+                <div class="gradient-left"></div>
+                <div class="carousel-container">
+                    <div class="carousel-track"></div>
+                </div>
+                <div class="gradient-right"></div>
             </div>
-            <input type="text" name="disease" autocomplete="off" placeholder="Ingresa el nombre de la enfermedad" required>
-            <button type="submit">
-                <span class="search-icon">🔍</span> Search Research
-            </button>
-        </form>
+        </div>
         <div id="results" class="results"></div>
     </div>
     
