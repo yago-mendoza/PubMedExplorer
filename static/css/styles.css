@@ -9,21 +9,29 @@ body {
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .container {
     width: 90%;
     max-width: 800px;
     text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+/* =============================================================
+   Layout
+   ============================================================= */
 .top-strip {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 20px;
-    background-color: #009dff;
+    background-color: #0f3860;
     z-index: 1000;
 }
 
@@ -40,6 +48,9 @@ body {
     margin-top: 100px;
 }
 
+/* =============================================================
+   Header
+   ============================================================= */
 header h1 {
     font-size: 2em;
     color: #333333;
@@ -53,6 +64,9 @@ header h1 {
     margin-bottom: 30px;
 }
 
+/* =============================================================
+   Search Form
+   ============================================================= */
 .search-form {
     position: relative;
     display: flex;
@@ -68,7 +82,7 @@ header h1 {
     width: 50%;
     border: 2px solid #ccc;
     border-radius: 9999px;
-    background: linear-gradient(to bottom right, #009dff 30%, #aee3ff);
+    background: linear-gradient(to bottom right, #0f3860 30%, #3087bc);
     color: #ffffff;
     outline: none;
     line-height: 1.5;
@@ -78,7 +92,7 @@ header h1 {
 
 .search-form input::placeholder {
     text-align: left;
-    padding-left: 10;
+    padding-left: 10px;
     color: #ffffff;
 }
 
@@ -106,6 +120,9 @@ header h1 {
     opacity: 0.8;
 }
 
+/* =============================================================
+   Results
+   ============================================================= */
 .results {
     display: flex;
     flex-direction: column;
@@ -114,8 +131,6 @@ header h1 {
 
 .results-counter {
     position: absolute;
-    right: 22%;
-    top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
@@ -135,7 +150,7 @@ header h1 {
 .counter-icon img {
     width: 100%;
     height: 100%;
-    filter: brightness(0) invert(1);  /* Hace el icono blanco como el magnifying glass */
+    filter: brightness(0) invert(1);
 }
 
 .counter-icon:hover {
@@ -155,12 +170,15 @@ header h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
     text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
 }
 
 .results .result-panel h2 {
     font-size: 1.5em;
     color: #333333;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 .results .result-panel p {
@@ -176,21 +194,9 @@ header h1 {
     text-align: left;
 }
 
-@media (max-width: 600px) {
-    .search-form {
-        flex-direction: column;
-    }
-
-    .search-form input {
-        width: 100%;
-    }
-
-    .search-form button {
-        width: 100%;
-    }
-}
-
-/* Loading Overlay Styles */
+/* =============================================================
+   Loading Overlay
+   ============================================================= */
 #loading-overlay {
     position: fixed;
     top: 0;
@@ -205,7 +211,9 @@ header h1 {
     z-index: 1000;
 }
 
-/* Spinner Styles */
+/* =============================================================
+   Spinner
+   ============================================================= */
 .spinner {
     border: 8px solid #f3f3f3; /* Light grey */
     border-top: 8px solid #007AFF; /* Blue */
@@ -215,13 +223,14 @@ header h1 {
     animation: spin 1s linear infinite;
 }
 
-/* Spinner Animation */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Title Container */
+/* =============================================================
+   Title Container
+   ============================================================= */
 .title-container {
     display: flex;
     align-items: center;
@@ -229,7 +238,9 @@ header h1 {
     margin-bottom: 10px;
 }
 
-/* Page Circle Styles */
+/* =============================================================
+   Page Circle
+   ============================================================= */
 .page-circle {
     position: relative;
     width: 40px; /* Adjust size as needed */
@@ -244,16 +255,14 @@ header h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Document Icon Styles */
 .page-circle .doc-icon {
     position: absolute;
     width: 60%;
     height: 60%;
     object-fit: contain;
-    opacity: 0.3; /* Make the icon blurry/translucent */
+    opacity: 0.3; /* Make the icon translucent */
 }
 
-/* Page Number Styles */
 .page-circle .page-number {
     color: #ffffff;
     font-weight: bold;
@@ -261,28 +270,26 @@ header h1 {
     font-size: 1em;
 }
 
-/* Adjust title styles if necessary */
-.results .result-panel h2 {
-    font-size: 1.5em;
-    color: #333333;
-    margin: 0; /* Remove default margin to align properly */
-}
-
+/* =============================================================
+   Article Metadata
+   ============================================================= */
 .article-date {
-    font-size: 1.1em;  /* Aumentado de tamaño */
-    font-weight: 500;  /* Opcional: hace la fecha un poco más bold */
-    color: #333;       /* Opcional: asegura buen contraste */
+    font-size: 1.1em;  /* Increased size */
+    font-weight: 500;  /* Makes the date slightly bolder */
+    color: #333;       /* Ensures good contrast */
     margin-bottom: 10px;
 }
 
 .article-metadata {
     text-align: justify;
-    line-height: 1.4;  /* Opcional: mejora la legibilidad del texto justificado */
+    line-height: 1.4;  /* Improves readability of justified text */
     margin-bottom: 10px;
     color: #555555;
 }
 
-/* Carousel Container */
+/* =============================================================
+   Carousel
+   ============================================================= */
 .suggestions-carousel {
     position: relative;
     width: 100%;
@@ -293,7 +300,6 @@ header h1 {
     z-index: 5;
 }
 
-/* Gradient Overlays */
 .gradient-left, .gradient-right {
     position: absolute;
     top: 0;
@@ -313,7 +319,6 @@ header h1 {
     background: linear-gradient(to left, #ffffff 0%, rgba(255,255,255,0) 100%);
 }
 
-/* Carousel Track */
 .carousel-container {
     width: 100%;
     height: 100%;
@@ -327,7 +332,9 @@ header h1 {
     height: 100%;
 }
 
-/* Suggestion Buttons */
+/* =============================================================
+   Suggestion Buttons
+   ============================================================= */
 .suggestion-btn {
     padding: 8px 20px;
     background: white;
@@ -356,26 +363,41 @@ header h1 {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Search Section Container */
+/* =============================================================
+   Search Section Container
+   ============================================================= */
 .search-section {
     position: relative;
     z-index: 10;
     margin-bottom: 20px;
 }
 
-/* Results Container */
-.results {
-    position: relative;
-    z-index: 1;
+/* =============================================================
+   Results Container
+   ============================================================= */
+.results-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 0;
     margin-top: 20px;
 }
 
-.result-panel {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
+.results-wrapper::-webkit-scrollbar {
+    width: 10px;
 }
 
+.results-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.results-wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* =============================================================
+   Animations
+   ============================================================= */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -385,5 +407,16 @@ header h1 {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* =============================================================
+   Fixed Sections
+   ============================================================= */
+.fixed-section {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+    padding-bottom: 20px;
 }
 
