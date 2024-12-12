@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PubMed Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Buscar Publicaciones en PubMed</h1>
+    <form id="search-form">
+        <input type="text" name="disease" placeholder="Ingresa el nombre de la enfermedad" required>
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="results"></div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
