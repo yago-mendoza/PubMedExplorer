@@ -37,30 +37,39 @@ header h1 {
 }
 
 .search-form input {
-    padding: 20px 30px;
+    padding: 30px 40px 30px 10%;
     font-size: 1.1em;
-    width: 80%;
+    width: 60%;
     border: 2px solid #ccc;
     border-radius: 9999px;
-    background: linear-gradient(to right, #007AFF, #78C1FF);
+    background: linear-gradient(to bottom right, #3087bc 30%, #98d2f0);
     color: #ffffff;
     outline: none;
     line-height: 1.5;
-    text-align: center;
+    text-align: left;
+    text-indent: 0;
 }
 
 .search-form input::placeholder {
+    text-align: left;
+    padding-left: 0;
     color: #ffffff;
 }
 
 .search-form .search-icon {
     position: absolute;
-    left: 15px;
+    left: 17%;
     top: 50%;
     transform: translateY(-50%);
-    color: #ffffff;
-    font-size: 1.2em;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
+}
+
+.search-form .search-icon img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) invert(1);
 }
 
 .search-form button {
