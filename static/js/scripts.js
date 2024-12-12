@@ -17,12 +17,25 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
         return;
     }
 
-    const list = document.createElement('ul');
     data.forEach(article => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `<a href="${article.link}" target="_blank">${article.title}</a> (${article.date})`;
-        list.appendChild(listItem);
-    });
+        const panel = document.createElement('div');
+        panel.classList.add('result-panel');
 
-    resultsDiv.appendChild(list);
+        const title = document.createElement('h2');
+        title.textContent = article.title;
+
+        const summary = document.createElement('p');
+        summary.textContent = article.summary || 'No summary available.';
+
+        const link = document.createElement('a');
+        link.href = article.link;
+        link.target = '_blank';
+        link.textContent = 'Read More';
+
+        panel.appendChild(title);
+        panel.appendChild(summary);
+        panel.appendChild(link);
+
+        resultsDiv.appendChild(panel);
+    });
 });

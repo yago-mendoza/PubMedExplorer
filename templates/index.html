@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <title>PubMed Search</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Buscar Publicaciones en PubMed</h1>
-    <form id="search-form">
-        <input type="text" name="disease" placeholder="Ingresa el nombre de la enfermedad" required>
-        <button type="submit">Buscar</button>
-    </form>
-    <div id="results"></div>
-
+    <div class="container">
+        <header>
+            <h1>Enter a disease name...</h1>
+            <p class="subtitle">Write the name of the disease and press search</p>
+        </header>
+        <form id="search-form" class="search-form">
+            <input type="text" name="disease" placeholder="Ingresa el nombre de la enfermedad" required>
+            <button type="submit">
+                <span class="search-icon">🔍</span> Search Research
+            </button>
+        </form>
+        <div id="results" class="results"></div>
+    </div>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
