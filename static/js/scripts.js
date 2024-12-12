@@ -26,18 +26,29 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
             const panel = document.createElement('div');
             panel.classList.add('result-panel');
 
+            const date = document.createElement('div');
+            date.classList.add('article-date');
+            date.textContent = article.date || 'Date not available';
+
             const title = document.createElement('h2');
             title.textContent = article.title;
 
+            const metadata = document.createElement('p');
+            metadata.classList.add('article-metadata');
+            metadata.textContent = `Pages: ${article.pages || 'N/A'} | Journal: ${article.journal || 'N/A'} | Authors: ${article.authors || 'N/A'}`;
+
             const summary = document.createElement('p');
-            summary.textContent = article.summary || 'No summary available.';
+            summary.classList.add('article-abstract');
+            summary.textContent = article.summary || 'No abstract available.';
 
             const link = document.createElement('a');
             link.href = article.link;
             link.target = '_blank';
             link.textContent = 'Read More';
 
+            panel.appendChild(date);
             panel.appendChild(title);
+            panel.appendChild(metadata);
             panel.appendChild(summary);
             panel.appendChild(link);
 

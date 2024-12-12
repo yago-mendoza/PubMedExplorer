@@ -3,12 +3,14 @@ import requests
 import time
 from threading import Lock
 
+from config.pubmed_config import PUBMED_CONFIG
+
 class RateLimiter:
-    def __init__(self, min_interval=1):
+    def __init__(self):
         self.session = requests.Session()
         self.last_request_time = 0
         self.lock = Lock()
-        self.min_interval = min_interval
+        self.min_interval = PUBMED_CONFIG["rate_limit"]["min_interval"]
 
     def get(self, *args, **kwargs):
         with self.lock:
@@ -24,20 +26,20 @@ class RateLimiter:
             return response
 
 # Crear una instancia global del rate limiter
-pubmed_client = RateLimiter(min_interval=1)
+pubmed_client = RateLimiter()
 
-@lru_cache(maxsize=100)
+@lru_cache(maxsize=PUBMED_CONFIG["rate_limit"]["cache_size"])
 def fetch_pubmed_articles(disease_name, max_results=5):
     """
     Fetches the latest PubMed articles for a given disease.
     """
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+    # Uses a PubMed endpoint to retrieve article IDs matching the search criteria
+    base_url = PUBMED_CONFIG["base_urls"]["search"]
     params = {
-        "db": "pubmed",
+        **PUBMED_CONFIG["default_params"],
+        **PUBMED_CONFIG["search_params"],
         "term": disease_name,
-        "retmax": max_results,
-        "sort": "pub+date",
-        "retmode": "json"
+        "retmax": max_results
     }
 
     try:
@@ -59,11 +61,10 @@ def fetch_multiple_article_details(article_ids):
     """
     Fetches details for multiple articles in a single request.
     """
-    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
+    base_url = PUBMED_CONFIG["base_urls"]["summary"]
     params = {
-        "db": "pubmed",
-        "id": ",".join(article_ids),
-        "retmode": "json"
+        **PUBMED_CONFIG["default_params"],  # solo db y retmode
+        "id": ",".join(article_ids)
     }
 
     try:
