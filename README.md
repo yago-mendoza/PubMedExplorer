@@ -23,7 +23,7 @@ PubMedExplorer is a Python-based application that provides a user-friendly inter
 ### Clone the Repository
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/yago-mendoza/PubMedExplorer
 ```
 
 ### Install Poetry
